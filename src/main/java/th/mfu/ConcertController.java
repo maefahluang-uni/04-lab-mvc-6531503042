@@ -2,7 +2,6 @@ package th.mfu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,15 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ConcertController {
     // TODO: create hashmap of concerts for storing data
     private HashMap<Integer, Concert> concerts = new HashMap<Integer, Concert>();
-    private int nextId = 1;
+    private int nextId = 1; // To generate unique IDs for concerts
 
-    // Initialize a data format for date input
+    // Initialize a date format for date input
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-    // Add an @InitBinder method for date conversion
+    // TODO: add initbinder to convert date
     @InitBinder
-    private void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Date.class, "date", new CustomDateEditor(this.dateFormat, true));
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
     @GetMapping("/concerts")
@@ -40,7 +39,6 @@ public class ConcertController {
         // TODO: return a template to list concerts
         return "list-concert";
     }
-
 
     @GetMapping("/add-concert")
     public String addAConcertForm(Model model) {
@@ -54,8 +52,8 @@ public class ConcertController {
     public String saveConcert(@ModelAttribute Concert concert) {
         // TODO: add concert to list of concerts
         concert.setId(nextId);
-        // TODO: increment nextId
         concerts.put(nextId, concert);
+        // TODO: increment nextId
         nextId++;
         // TODO: redirect to list concerts
         return "redirect:/concerts";
@@ -69,10 +67,9 @@ public class ConcertController {
         return "redirect:/concerts";
     }
 
-    
-    @GetMapping("/delete-concerts")
+    @GetMapping("/delete-concert")
     public String removeAllConcerts() {
-        //TODO: clear all employees and reset id
+        // TODO: clear all employees and reset id
         concerts.clear();
         nextId = 1;
         // TODO: redirect to list concerts
