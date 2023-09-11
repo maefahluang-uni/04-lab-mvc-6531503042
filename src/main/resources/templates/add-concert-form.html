@@ -4,9 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Concert</title>
+    <style>
+        /* Inline CSS */
+        h1 {
+            color: blue;
+        }
+
+        /* Additional CSS styles */
+        label {
+            font-weight: bold;
+        }
+
+        /* Add more CSS styles as needed */
+    </style>
 </head>
 <body>
     <h1>Add Concert</h1>
-    <!-- add form for adding concert-->
+    
+    <!-- Inline CSS -->
+    <div style="background-color: lightgray; padding: 10px;">
+        <p>This is a paragraph with inline CSS styling.</p>
+    </div>
+    
+    <!-- Inline JavaScript -->
+    <button onclick="showAlert()">Click Me</button>
+    
+    <script>
+        // JavaScript function
+        function showAlert() {
+            alert("Hello, this is inline JavaScript!");
+        }
+    </script>
+
+    <!-- Original form for adding concert -->
+    <form action="/concerts" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Add Concert">
+    </form>
 </body>
 </html>

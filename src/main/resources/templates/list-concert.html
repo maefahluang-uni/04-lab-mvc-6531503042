@@ -4,10 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concert List</title>
+    <style>
+        /* Inline CSS */
+        h1 {
+            color: blue;
+        }
+
+        /* Additional CSS styles */
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        /* Add more CSS styles as needed */
+    </style>
 </head>
 <body>
     <h1>Concert List</h1>
+
+    <!-- Inline CSS -->
+    <a class="button" href="/add-concert/">Add Concert</a>
+
     <!-- TODO: Add list of concerts -->
-    <!-- TODO: show delete link for each concert -->
+    <ul>
+        <li th:each="concert :${concerts}">
+            <a th:href="@{/delete-concert/{id}(id=${concert.id})}">Delete</a>
+            <span th:text="${concert.title}"></span>
+            <span th:text="${concert.performer}"></span>
+            <span th:text="${#dates.format(concert.date, 'yyyy-MM-dd')}"></span>
+            <span th:text="${concert.description}"></span>
+        </li>
+    </ul>
+
+    <!-- Inline JavaScript -->
+    <script>
+        // JavaScript code
+        document.querySelectorAll("a.button").forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                // Your JavaScript logic for the "Add Concert" button goes here
+            });
+        });
+
+        document.querySelectorAll("ul li a").forEach(function(deleteLink) {
+            deleteLink.addEventListener("click", function(event) {
+                event.preventDefault();
+                // Your JavaScript logic for the "Delete" links goes here
+            });
+        });
+    </script>
 </body>
 </html>

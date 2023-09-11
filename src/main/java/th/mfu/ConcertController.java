@@ -2,6 +2,7 @@ package th.mfu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,44 +21,62 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ConcertController {
     // TODO: create hashmap of concerts for storing data
+    private HashMap<Integer, Concert> concerts = new HashMap<Integer, Concert>();
+    private int nextId = 1;
 
-    //TODO: add initbinder to convert date
+    // Initialize a data format for date input
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+    // Add an @InitBinder method for date conversion
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, "date", new CustomDateEditor(this.dateFormat, true));
+    }
 
     @GetMapping("/concerts")
     public String listConcerts(Model model) {
         // TODO: add concerts to model
+        model.addAttribute("concerts", concerts.values());
         // TODO: return a template to list concerts
-        return "";
+        return "list-concert";
     }
+
 
     @GetMapping("/add-concert")
     public String addAConcertForm(Model model) {
         // TODO: pass blank concert to a form
+        model.addAttribute("concerts", new Concert());
         // TODO: return a template for concert form
-        return "";
+        return "add-concert-form";
     }
 
     @PostMapping("/concerts")
     public String saveConcert(@ModelAttribute Concert concert) {
         // TODO: add concert to list of concerts
+        concert.setId(nextId);
         // TODO: increment nextId
+        concerts.put(nextId, concert);
+        nextId++;
         // TODO: redirect to list concerts
-        return "";
+        return "redirect:/concerts";
     }
 
     @GetMapping("/delete-concert/{id}")
     public String deleteConcert(@PathVariable int id) {
         // TODO: remove concert from list of concerts
+        concerts.remove(id);
         // TODO: redirect to list concerts
-        return "";
+        return "redirect:/concerts";
     }
 
     
-    @GetMapping("/delete-concert")
+    @GetMapping("/delete-concerts")
     public String removeAllConcerts() {
         //TODO: clear all employees and reset id
+        concerts.clear();
+        nextId = 1;
         // TODO: redirect to list concerts
-        return "";
+        return "redirect:/concerts";
     }
 
 }
